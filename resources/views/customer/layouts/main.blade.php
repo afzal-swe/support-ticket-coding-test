@@ -60,7 +60,7 @@
                        <table class="table">
                          <thead>
                            <tr>
-                             <th scope="col">OrderId</th>
+                             <th scope="col">No</th>
                              <th scope="col">Date</th>
                              <th scope="col">Total</th>
                              <th scope="col">Payment Type</th>

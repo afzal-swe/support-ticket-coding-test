@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\customer\CustomerController;
+use App\Http\Controllers\indexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,19 +16,27 @@ use App\Http\Controllers\customer\CustomerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => '/'], function () {
+    Route::controller(indexController::class)->group(function () {
+        Route::get('/', 'home_page')->name('home_page');
+        Route::get('/customer-logout', 'customer_logout')->name('customer.logout');
+    });
+    // return view('welcome')->name('home');
 });
 
-// Admin Home Route Section Start //
-Route::controller(CustomerController::class)->group(function () {
-    Route::get('/test', 'Customer_Dashboard')->name('customer');
+Route::middleware(['auth'])->group(function () {
+
+    Route::group(['prefix' => 'customer'], function () {
+        Route::controller(CustomerController::class)->group(function () {
+            Route::get('/dashboard', 'Customer_Dashboard')->name('Customer_Dashboard');
+        });
+    });
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

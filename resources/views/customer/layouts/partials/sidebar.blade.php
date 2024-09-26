@@ -6,7 +6,7 @@
             <a href="#" class="text-muted"> <li class="list-group-item"><i class="fas fa-home"></i> Dashboard</li></a>
           
             <a href="#" class="text-muted"> <li class="list-group-item"> <i class="fab fa-telegram-plane"></i> Open Ticket</li> </a>
-            <a href="#" class="text-muted"> <li class="list-group-item"> <i class="fas fa-sign-out-alt"></i> Logout</li> </a>
+            <a href="{{ route('customer.logout') }}" class="text-muted"> <li class="list-group-item"> <i class="fas fa-sign-out-alt"></i> Logout</li> </a>
            </ul>
      
     </div>
