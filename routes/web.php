@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\customer\CustomerController;
 use App\Http\Controllers\indexController;
+use App\Http\Controllers\customer\CustomerTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,17 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'customer'], function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::get('/dashboard', 'Customer_Dashboard')->name('Customer_Dashboard');
+        });
+
+
+        Route::group(['prefix' => 'ticket'], function () {
+            Route::controller(CustomerTicketController::class)->group(function () {
+                Route::get('/open', 'Open_Ticket')->name('open.ticket');
+                Route::get('/create', 'new_ticket')->name('new.ticket');
+                Route::post('/store', 'store_ticket')->name('store.ticket');
+                Route::get('/show/{id}', 'show_Ticket')->name('show.ticket');
+                Route::get('/reply/{id}', 'asdf_Ticket')->name('reply.ticket');
+            });
         });
     });
 });

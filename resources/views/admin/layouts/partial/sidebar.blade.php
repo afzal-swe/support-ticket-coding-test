@@ -1,3 +1,13 @@
+
+
+
+@php
+  $ticket = DB::table('tickets')->get();
+@endphp
+
+
+
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -33,12 +43,12 @@
               <p>
                 Customer's Ticket
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                <span class="badge badge-info right">{{ count($ticket) }}</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{ route('view_all_ticket') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Ticket</p>
                 </a>
