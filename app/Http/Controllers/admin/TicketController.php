@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotificationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -70,7 +71,17 @@ class TicketController extends Controller
 
     public function close_ticket(Request $request)
     {
-        DB::table('tickets')->where('id', $request->id)->update(['status' => 2]);
+
+
+
+        $data = DB::table('tickets')
+            ->where('id', $request->id)
+            ->update(['status' => 2]);
+
+
+
+
+        // Mail::to($request->c_email)->send(new NotificationMail($data));
 
         $notification = Session()->flash('message', 'Close Successfully!');
         return redirect()->back()->with($notification);
