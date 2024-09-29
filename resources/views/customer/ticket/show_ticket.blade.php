@@ -1,9 +1,36 @@
 @extends('customer.layouts.app')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row ">
        
-        <div class="col-md-12 col-sm-12 col-lg-12">
+		
+
+			<div class="col-sm-4 col-md-4 col-lg-4">
+				<div class="card mt-2">
+					<div class="card-body">
+					   <strong>Reply Message.</strong><br>
+					   <div>
+							 <form action="{{ route('reply.ticket') }}" method="post">
+								 @csrf
+							   <div class="form-group">
+								 <label for="exampleInputPassword1">Message</label>
+								 <textarea class="form-control" name="message" required=""></textarea>
+								   <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+							   </div>
+							  <br>
+	
+							   {{-- <div>
+								   <input type="hidden" class="form-control" name="oldimage" value="{{ $ticket->image }}">
+							   </div><br> --}}
+							   <button type="submit" class="btn btn-primary">Submit Ticket</button>
+							 </form>
+					   </div>
+					</div>
+				</div>
+			</div>
+
+		
+        <div class="col-md-8 col-sm-8 col-lg-8">
         	<div class="card  p-2">
         	  <div class="row">	
         		<h3 class="ml-4">Your Ticket Details</h3><hr>
@@ -27,6 +54,11 @@
 
         	<div class="card p-2 mt-2">
         		<strong>All Reply Message.</strong><br>
+				@if (session('message'))
+                  <div class="alert alert-success">
+                     {{ session('message') }}
+                  </div>
+               @endif
         		<div class="card-body" style="height: 450px; overflow-y: scroll;">
         		@isset($replies)	
         		   @foreach($replies as $row)
@@ -47,30 +79,7 @@
         	</div>
 
 
-            <div class="card mt-2">
-                <div class="card-body">
-                   <strong>Reply Message.</strong><br>
-                   <div>
-                   	  <form action="#" method="post" enctype="multipart/form-data">
-                   	  	@csrf
-                   	    <div class="form-group">
-                   	      <label for="exampleInputPassword1">Message</label>
-                   	      <textarea class="form-control" name="message" required=""></textarea>
-                   	        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                   	    </div>
-                   	    <div>
-                   	    	<label for="exampleInputPassword1">Image</label>
-                   	    	<input type="file" class="form-control" name="image" >
-                   	    </div><br>
-
-                   	    {{-- <div>
-                   	    	<input type="hidden" class="form-control" name="oldimage" value="{{ $ticket->image }}">
-                   	    </div><br> --}}
-                   	    <button type="submit" class="btn btn-primary">Submit Ticket</button>
-                   	  </form>
-                   </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div><hr>

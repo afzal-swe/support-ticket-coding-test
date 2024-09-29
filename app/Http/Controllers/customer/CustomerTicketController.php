@@ -15,10 +15,12 @@ class CustomerTicketController extends Controller
     //
 
     private $db_tickets;
+    private $db_replies;
 
     public function __construct()
     {
         $this->db_tickets = "tickets";
+        $this->db_replies = "replies";
     }
 
 
@@ -73,6 +75,32 @@ class CustomerTicketController extends Controller
         $ticket = DB::table('tickets')->where('id', $request->id)->first();
         return view('customer.ticket.show_ticket', compact('ticket'));
     }
+
+    public function reply_Ticket(Request $request)
+    {
+        // dd($request->all());
+
+        $validate = $request->validate([
+            'message' => ['required'],
+        ]);
+
+        $data = array();
+        $data['message'] = $request->message;
+        $data['ticket_id'] = $request->ticket_id;
+        $data['user_id'] = Auth::id();
+        $data['reply_date'] = date('Y-m-d');
+
+
+
+
+        DB::table($this->db_replies)->insert($data);
+        DB::table('tickets')->where('id', $request->ticket_id)->update(['status' => 0]);
+
+        $notification = Session()->flash('message', 'Replied Done!');
+        return redirect()->back()->with($notification);
+    }
+
+
 
     public function Customer_Ticket_Delete($id)
     {

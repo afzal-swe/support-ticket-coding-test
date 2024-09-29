@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/create', 'new_ticket')->name('new.ticket');
                 Route::post('/store', 'store_ticket')->name('store.ticket');
                 Route::get('/show/{id}', 'show_Ticket')->name('show.ticket');
-                Route::get('/reply/{id}', 'asdf_Ticket')->name('reply.ticket');
+                Route::post('/reply/ticket', 'reply_Ticket')->name('reply.ticket');
                 Route::get('/delete/{id}', 'Customer_Ticket_Delete')->name('customer_ticket.delete');
             });
         });

@@ -48,7 +48,7 @@
                               @elseif($row->status==1)
                                  <span class="badge badge-success">Replied</span>
                               @elseif($row->status==2)
-                                 <span class="badge badge-muted">Closed</span>
+                                 <span class="badge badge-danger">Closed</span>
                               @endif          
                             </td>
                             <td>
