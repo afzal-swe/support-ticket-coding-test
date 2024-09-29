@@ -16,6 +16,12 @@
                    All Tickets <a href="{{ route('new.ticket') }}" class="btn btn-sm btn-danger" style="float:right;">Open Ticket</a>
                 </div>
 
+                @if (session('message'))
+                  <div class="alert alert-success">
+                     {{ session('message') }}
+                  </div>
+               @endif
+
                 <div class="card-body">
                    <div>
                        <table class="table">
@@ -47,7 +53,7 @@
                             </td>
                             <td>
                             	<a href="{{ route('show.ticket',$row->id) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                            	<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                            	<a href="{{ route('customer_ticket.delete',$row->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                            </tr>
                           @endforeach 

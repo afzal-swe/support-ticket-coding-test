@@ -7,11 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 
 class CustomerTicketController extends Controller
 {
     //
+
+    private $db_tickets;
+
+    public function __construct()
+    {
+        $this->db_tickets = "tickets";
+    }
 
 
     public function Open_Ticket()
@@ -41,16 +49,19 @@ class CustomerTicketController extends Controller
         $data['status'] = 0;
         $data['date'] = date('Y-m-d');
 
-        if ($request->image) {
+        $image = $request->image;
+
+        if ($image) {
             //working with image
-            $photo = $request->image;
-            $photoname = uniqid() . '.' . $photo->getClientOriginalExtension();
-            Image::make($photo)->resize(600, 350)->save('customer/images/ticket/' . $photoname);  //image intervention
-            $data['image'] = 'image/ticket/' . $photoname;   // public/files/brand/plus-point.jpg
+
+            $photoname = uniqid() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(600, 350)->save('customer/images/ticket/' . $photoname);  //image intervention
+            $data['image'] = 'customer/images/ticket/' . $photoname;   // public/files/brand/plus-point.jpg
         }
 
         DB::table('tickets')->insert($data);
-        return redirect()->route('open.ticket');
+        $notification = Session()->flash('message', 'Submit Issues Successfully!');
+        return redirect()->route('open.ticket')->with($notification);
     }
 
 
@@ -61,5 +72,13 @@ class CustomerTicketController extends Controller
 
         $ticket = DB::table('tickets')->where('id', $request->id)->first();
         return view('customer.ticket.show_ticket', compact('ticket'));
+    }
+
+    public function Customer_Ticket_Delete($id)
+    {
+        DB::table($this->db_tickets)->where('id', $id)->delete();
+
+        $notification = Session()->flash('message', 'Data Delete Successfully!');
+        return redirect()->back()->with($notification);
     }
 }

@@ -18,6 +18,7 @@ Route::middleware(['is_admin'])->group(function () {
             // Admin Home Route Section Start //
             Route::controller(TicketController::class)->group(function () {
                 Route::get('/', 'View_All_Ticket')->name('view_all_ticket');
+                Route::get('/delete/{id}', 'Ticket_Delete')->name('ticket.delete');
             });
         });
     });
