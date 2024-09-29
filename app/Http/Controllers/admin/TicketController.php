@@ -15,13 +15,31 @@ class TicketController extends Controller
     private $db_tickets;
     private $db_replies;
 
+
+
+    /**
+     * Class constructor to initialize database table names for tickets and replies.
+     */
     public function __construct()
     {
+        // Define the table for storing ticket data.
         $this->db_tickets = "tickets";
+
+        // Define the table for storing reply data.
         $this->db_replies = "replies";
     }
 
 
+
+
+
+
+
+    /**
+     * Retrieve and display all tickets along with the associated user's name.
+     * 
+     * @return \Illuminate\View\View Returns the view displaying all tickets.
+     */
     public function View_All_Ticket()
     {
 
@@ -29,11 +47,25 @@ class TicketController extends Controller
             ->join('users', 'tickets.user_id', 'users.id')
             ->select('tickets.*', 'users.name')
             ->get();
+
+        // Return the view with the list of tickets.
         return view('admin.ticket.view_ticket', compact('view_ticket'));
     }
 
 
 
+
+
+
+
+
+    /**
+     * Display the reply form for a specific ticket, including the ticket details and the associated user's name.
+     * 
+     * @param \Illuminate\Http\Request $request The incoming HTTP request containing the ticket ID.
+     * 
+     * @return \Illuminate\View\View Returns the view displaying the ticket reply form with the ticket details.
+     */
     public function admin_ticket_reply(Request $request)
     {
 
@@ -47,6 +79,17 @@ class TicketController extends Controller
     }
 
 
+
+
+
+
+    /**
+     * Store the admin's reply to a ticket and update the ticket status.
+     * 
+     * @param \Illuminate\Http\Request $request The incoming HTTP request containing reply details and ticket ID.
+     * 
+     * @return \Illuminate\Http\RedirectResponse Redirect back with a success notification after storing the reply.
+     */
     public function Admin_Store_Reply(Request $request)
     {
 
@@ -69,17 +112,22 @@ class TicketController extends Controller
 
 
 
+
+
+
+    /**
+     * Close a ticket by updating its status to '2' and optionally send a notification email.
+     * 
+     * @param \Illuminate\Http\Request $request The incoming HTTP request containing the ticket ID.
+     * 
+     * @return \Illuminate\Http\RedirectResponse Redirect back with a success notification after closing the ticket.
+     */
     public function close_ticket(Request $request)
     {
-
-
 
         $data = DB::table('tickets')
             ->where('id', $request->id)
             ->update(['status' => 2]);
-
-
-
 
         // Mail::to($request->c_email)->send(new NotificationMail($data));
 
@@ -87,6 +135,19 @@ class TicketController extends Controller
         return redirect()->back()->with($notification);
     }
 
+
+
+
+
+
+    /**
+     * Delete a ticket from the database based on the provided ID.
+     * 
+     * @param \Illuminate\Http\Request $request The incoming HTTP request.
+     * @param int $id The ID of the ticket to be deleted.
+     * 
+     * @return \Illuminate\Http\RedirectResponse Redirect back with a success notification after deletion.
+     */
     public function Ticket_Delete(Request $request, $id)
     {
 
