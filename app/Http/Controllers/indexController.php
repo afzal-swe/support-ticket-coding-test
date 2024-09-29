@@ -11,7 +11,7 @@ class indexController extends Controller
 
     public function home_page()
     {
-        return view('welcome');
+        return view('auth.login');
     }
 
     public function customer_logout()
