@@ -68,7 +68,7 @@
                               @endif
                           </td>
                             <td >
-                                <a href="#" class="btn btn-info btn-sm" title="Edit Data"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('admin_ticket_reply',$row->id) }}" class="btn btn-info btn-sm" title="Edit Data"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route('ticket.delete',$row->id) }}" id="delete" class="btn btn-danger btn-sm delete" title="Delete Data"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>

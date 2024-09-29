@@ -18,6 +18,9 @@ Route::middleware(['is_admin'])->group(function () {
             // Admin Home Route Section Start //
             Route::controller(TicketController::class)->group(function () {
                 Route::get('/', 'View_All_Ticket')->name('view_all_ticket');
+                Route::get('/reply/{id}', 'admin_ticket_reply')->name('admin_ticket_reply');
+                Route::post('/store', 'Admin_Store_Reply')->name('admin.store.reply');
+                Route::get('/close/{id}', 'close_ticket')->name('admin.close.ticket');
                 Route::get('/delete/{id}', 'Ticket_Delete')->name('ticket.delete');
             });
         });
